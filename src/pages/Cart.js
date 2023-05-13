@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import CartItem from "../components/CartItem";
+import { toast, ToastContainer } from "react-toastify";
+import { StripeCheckOut } from "react-stripe-checkout";
 
 const Cart = () => {
   const productData = useSelector((state) => state.bazar.productData);
@@ -11,6 +13,18 @@ const Cart = () => {
       totalPrice += productData[i].price * productData[i].quantity;
     }
     return totalPrice;
+  };
+
+  const userInfo = useSelector((state) => state.bazar.userInfo);
+
+  const [payNow, setPayNow] = useState(false);
+
+  const handleCheckOut = () => {
+    if (userInfo) {
+      setPayNow(true);
+    } else {
+      toast.error("please sign in to checkout");
+    }
   };
 
   return (
@@ -35,14 +49,30 @@ const Cart = () => {
           <p className="font-titleFont font-semibold flex justify-between mt-6">
             total
             <span className="text-xl font-bold">
-              {totalPriceCalculator()}
+              $ {totalPriceCalculator().toFixed(0)}
             </span>{" "}
           </p>
-          <button className="text-base bg-black text-white w-full py-3 mt-6 hover:bg-gray-800 duration-300">
+          <button
+            onClick={handleCheckOut}
+            className="text-base bg-black text-white w-full py-3 mt-6 hover:bg-gray-800 duration-300"
+          >
             proceed to checkout
           </button>
+          {payNow && <div></div>}
         </div>
       </div>
+      <ToastContainer
+        position="top-left"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        them="dart"
+      />
     </div>
   );
 };

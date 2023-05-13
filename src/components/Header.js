@@ -11,6 +11,8 @@ const Header = () => {
     sum = sum + productData[i].quantity;
   }
 
+  const userInfo = useSelector((state) => state.bazar.userInfo);
+
   return (
     <div className="w-full h-20 bg-white border-b-[1px] border-b-gray-800 font-titleFont sticky top-0 z-50">
       <div className="max-w-screen-xl h-full mx-auto flex items-center justify-between">
@@ -45,11 +47,19 @@ const Header = () => {
               </span>
             </div>
           </Link>
-          <img
-            className="w-8 h-8 rounded-full"
-            src="https://images.pexels.com/photos/2871490/pexels-photo-2871490.jpeg"
-            alt="userLogo"
-          />
+
+          <Link to="login">
+            <img
+              className="w-8 h-8 rounded-full"
+              src={
+                userInfo
+                  ? userInfo.image
+                  : "https://images.pexels.com/photos/2871490/pexels-photo-2871490.jpeg"
+              }
+              alt="userLogo"
+            />
+          </Link>
+          {userInfo && <p>{userInfo.name}</p>}
         </div>
       </div>
     </div>

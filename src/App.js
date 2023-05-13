@@ -10,6 +10,7 @@ import {
   RouterProvider,
   ScrollRestoration,
 } from "react-router-dom";
+import Login from "./pages/Login";
 
 const Layout = () => {
   return (
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Home />, loader: productsData },
       { path: "/product/:id", element: <Product /> },
       { path: "/cart", element: <Cart /> },
+      { path: "/login", element: <Login /> },
     ],
   },
 ]);
